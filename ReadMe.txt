@@ -12,6 +12,9 @@ NPM Version: 3.10.10
 Running the Solution
 --------------------
 The solution is set to run IDServer, APIClient and WebClient on start up.
+Before running create the initial database by typing:
+	Update-Database in the package manager console for the IDServer project.
+
 When the browser is displayed navigate to http://localhost:5001/Home/Contact
 this action requires authorization so the login page will be displayed for the user to login,
 the first time you will need to register but once logged in the contact details will be displayed.
