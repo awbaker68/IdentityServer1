@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace IDServer.Models.ManageViewModels
 {
-    public class GenerateRecoveryCodesViewModel
-    {
-        public string[] RecoveryCodes { get; set; }
-    }
+	public class GenerateRecoveryCodesViewModel
+	{
+		public string[] RecoveryCodes { get; set; }
+	}
 }

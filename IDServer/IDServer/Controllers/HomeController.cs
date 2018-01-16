@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IDServer.Models;
 using IdentityServer4.Services;
+using IDServer.Custom.Home;
 
 namespace IDServer.Controllers
 {
-    public class HomeController : Controller
-    {
-		private IIdentityServerInteractionService _interaction;
+	public class HomeController : Controller
+	{
+		private readonly IIdentityServerInteractionService _interaction;
 
 		public HomeController(IIdentityServerInteractionService interaction)
 		{
@@ -19,32 +20,38 @@ namespace IDServer.Controllers
 		}
 
 		public IActionResult Index()
-        {
-            return View();
-        }
+		{
+			return View();
+		}
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+		public IActionResult About()
+		{
+			ViewData["Message"] = "Your application description page.";
 
-            return View();
-        }
+			return View();
+		}
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
+		public IActionResult Contact()
+		{
+			ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
+			return View();
+		}
 
+		/// <summary>
+		/// Shows the error page
+		/// </summary>
 		public async Task<IActionResult> Error(string errorId)
 		{
-			//return View();
-			ErrorViewModel errorViewModel = new ErrorViewModel();
+			var vm = new ErrorViewModel();
+
+			// retrieve error details from identityserver
 			var message = await _interaction.GetErrorContextAsync(errorId);
 			if (message != null)
-				errorViewModel.Error = message;
-			return View("Error", errorViewModel);
+			{
+				vm.Error = message;
+			}
+			return View("Error", vm);
 		}
 	}
 }

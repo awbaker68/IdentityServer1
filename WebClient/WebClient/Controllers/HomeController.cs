@@ -26,7 +26,6 @@ namespace WebClient.Controllers
 		public IActionResult About()
         {
             ViewData["Message"] = "Identity Server Test Web Client.";
-
             return View();
         }
 
@@ -41,26 +40,42 @@ namespace WebClient.Controllers
             return View();
         }
 
-		/// <summary>
-		/// Login the user
-		/// </summary>
-		[Authorize]
-		public IActionResult Login()
+        /// <summary>
+        /// Login the user
+        /// </summary>
+        [Authorize]
+        public IActionResult Login()
 		{
 			return Challenge(new AuthenticationProperties { RedirectUri = "/Home/Index" }, "oidc");
 		}
-		/// <summary>
-		/// Logout the user
-		/// </summary>
-		public IActionResult Logout()
+        /// <summary>
+        /// Logout the user
+        /// </summary>
+        [Authorize]
+        public IActionResult Logout()
 		{
-			return SignOut(new AuthenticationProperties { RedirectUri = "/Home/Index"}, "Cookies", "oidc");
+            return SignOut(new AuthenticationProperties { RedirectUri = "/Home/Index"}, "Cookies", "oidc");
 		}
+        /// <summary>
+        /// Register a user
+        /// </summary>
+        public IActionResult Register()
+        {
+            return Redirect("http://localhost:5000/account/register");
+        }
+        /// <summary>
+        /// Manage the current user
+        /// </summary>
+        [Authorize]
+        public IActionResult Manage()
+        {
+            return Redirect("http://localhost:5000/manage/index");
+        }
 
-		/// <summary>
-		/// Example action to call a web API method
-		/// </summary>
-		[Authorize]
+        /// <summary>
+        /// Example action to call a web API method
+        /// </summary>
+        [Authorize]
 		public async Task<JsonResult> CallAPI()
 		{
 			// Get client credentials with Access Token
